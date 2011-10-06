@@ -17,7 +17,7 @@
         }
       };
       Router.prototype.fireCallback = function(location) {
-        return this.callback.apply(this, this.rule.exec(location).slice(1));
+        return this.callback.apply(this, this.rule.exec(location));
       };
       return Router;
     })();
@@ -52,22 +52,12 @@
       }
       return RouteSet;
     })();
-    $.router = function(options) {
+    return $.router = function(options) {
       options = $.extend({}, options);
       return $.history.init(__bind(function(hash) {
         $.router.routeset = new RouteSet(options, hash);
         return $.router.routeset.process(hash);
       }, this));
-    };
-    return $.router.add = function(matchOrHash, callbackOrNull) {
-      if (typeof matchOrHash !== "string") {
-        $.each(matchOrHash, __bind(function(match, callback) {
-          return $.router.routeset.addRoute(match, callback);
-        }, this));
-      } else {
-        $.router.routeset.addRoute(matchOrHash, callbackOrNull);
-      }
-      return $.router.routeset;
     };
   })(jQuery);
 }).call(this);
