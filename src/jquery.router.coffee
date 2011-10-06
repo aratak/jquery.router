@@ -4,7 +4,7 @@
   class Router
     constructor: (@rule, @callback)-> @rule = new RegExp(@rule)
     match: (location)-> @ if @rule.test location
-    fireCallback: (location)-> @callback.apply @, @rule.exec(location)[1..]
+    fireCallback: (location)-> @callback.apply @, @rule.exec(location)
 
   class RouteSet
     findMatchedRoute: ->
