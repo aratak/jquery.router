@@ -2,8 +2,51 @@
 <html>
 <head>
 
+  <!-- jasmine core -->
+  <script src="../jasmine/jasmine.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../jasmine/jasmine-html.js" type="text/javascript" charset="utf-8"></script>
+  <link rel="stylesheet" href="../jasmine/jasmine.css" type="text/css" media="screen" charset="utf-8">
+
+  <!-- dependencies -->
+  <script src="lib/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="lib/jquery.history.js" type="text/javascript" charset="utf-8"></script>
+
+  <!-- source -->
+  <script src="../lib/jquery.router.js" type="text/javascript" charset="utf-8"></script>
+
+  <!-- tests -->
+  <script src="lib/jquery.router.js" type="text/javascript" charset="utf-8"></script>
+
+  <script type="text/javascript">
+    (function() {
+      var jasmineEnv = jasmine.getEnv();
+      jasmineEnv.updateInterval = 1000;
+
+      var trivialReporter = new jasmine.TrivialReporter();
+
+      jasmineEnv.addReporter(trivialReporter);
+
+      jasmineEnv.specFilter = function(spec) {
+        return trivialReporter.specFilter(spec);
+      };
+
+      var currentWindowOnload = window.onload;
+
+      window.onload = function() {
+        if (currentWindowOnload) {
+          currentWindowOnload();
+        }
+        execJasmine();
+      };
+
+      function execJasmine() {
+        jasmineEnv.execute();
+      }
+
+    })();
+  </script>
+
 </head>
 <body>
-
 </body>
 </html>
