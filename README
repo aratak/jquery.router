@@ -1,0 +1,4 @@
+Hint:
+```coffescript
+coffee -o build --watch --compile src/
+```
