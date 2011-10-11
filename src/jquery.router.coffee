@@ -21,9 +21,9 @@
       else if 'all'
         findMethod = (location, setOfRoutes)=> @findAllMatchedRoutes(location, setOfRoutes)
 
-      for passRoute in $(findMethod(location, setOfRoutes)).toArray()
-        console.log passRoute
+      $.each findMethod(location, setOfRoutes), (passRoute)->
         passRoute.fireCallback(location)
+        
       true
 
     beforeFilterProcess: (location)->
@@ -36,6 +36,7 @@
       @processWithSetOfRoutes(location, @filters.after_all, 'all')
 
     process: (location)->
+      console.log location
       @beforeFilterProcess(location) and @requestProcess(location) and @afterFilterProcess(location)
 
     addRoute: (rawMatch, callback)->
@@ -45,6 +46,7 @@
       @filters[filterPosition].push new Router(rawMatch, callback)
 
     add: (rawRoutesHash, filter=false)->
+      rawRoutesHash or= {}
       unless filter
         $.each rawRoutesHash, (rawMatch, callback)=>
           @addRoute(rawMatch, callback)
@@ -62,7 +64,9 @@
   $.router = (options)->
     options = $.extend {}, options
     $.router.routeset = new RouteSet(options.routes)
-    $.router.filters = (options={}, filterType)-> $.router.routeset.add(options, filterType)
+    $.router.filters = (options, filterType)-> 
+      options or= {}
+      $.router.routeset.add(options, filterType)
     $.router.filters(options.after_all, 'after_all')
     $.router.filters(options.before_all, 'before_all')
 
